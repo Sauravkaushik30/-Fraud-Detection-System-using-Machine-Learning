@@ -24,16 +24,19 @@ def predict_transaction(transaction):
     """
     Predict whether a transaction is fraudulent.
     """
+    # Debug: Print the transaction details
+    print("Transaction Details:", transaction)
+    
     # Check for balance discrepancy exceeding 1 lakh
     balance_difference = abs(transaction['oldbalanceOrg'] - transaction['newbalanceOrig'])
+    print("Balance Difference:", balance_difference)  # Debug: Print the balance difference
+    
     if balance_difference > 100000:
+        print("Condition met: Balance difference exceeds 1 lakh.")  # Debug: Log the condition
         return 1  # Fraudulent transaction
 
-    # Model-based prediction
-    transaction_df = pd.DataFrame([transaction])
-    transaction_df = transaction_df[numerical_features + categorical_features]
-    prediction = model.predict(transaction_df)
-    return prediction[0]
+    # Debug: Log fallback to model prediction
+    print("Balance condition not met. Using model prediction.")
 
 
 def predict_transaction(transaction):
@@ -43,6 +46,13 @@ def predict_transaction(transaction):
     transaction_df = pd.DataFrame([transaction])
     transaction_df = transaction_df[numerical_features + categorical_features]
     prediction = model.predict(transaction_df)
+    return prediction[0]
+
+ # Model-based prediction
+    transaction_df = pd.DataFrame([transaction])
+    transaction_df = transaction_df[numerical_features + categorical_features]
+    prediction = model.predict(transaction_df)
+    print("Model Prediction:", prediction[0])  # Debug: Log the model prediction
     return prediction[0]
 
 def detect_fraud_type(transaction):
